@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class UsuarioSenhaDto {
-@Posi
+
     @NotBlank
     @Size(min = 1, max = 50)
     private String senhaAtual;

@@ -2,6 +2,8 @@ package com.mballem.demo_park_api.service;
 
 
 import com.mballem.demo_park_api.entity.Usuario;
+import com.mballem.demo_park_api.exception.EntityNotFoundException;
+import com.mballem.demo_park_api.exception.UsernameUniqueViolationException;
 import com.mballem.demo_park_api.repository.UsuarioRepostory;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +20,16 @@ public class UsuarioService {
 
     @Transactional
     public Usuario salvar(Usuario usuario){
-        return usuarioRepostory.save(usuario);
+        try{
+            return usuarioRepostory.save(usuario);
+        }  catch (org.springframework.dao.DataIntegrityViolationException ex) {
+           throw new UsernameUniqueViolationException(String.format("Username '%s' já cadastrado", usuario.getUsername()));
+        }
    }
     @Transactional
     public Usuario buscarPorId(Long id){
         return usuarioRepostory.findById(id).orElseThrow(
-                () -> new RuntimeException("Usuario não encontrado.")
+                () -> new EntityNotFoundException(String.format("Usuário id=%s não encontrado.", id))
         );
     }
     @Transactional

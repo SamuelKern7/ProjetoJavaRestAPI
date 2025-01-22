@@ -1,8 +1,7 @@
-package com.mballem.demoparkapi.web.exception;
-
-import com.mballem.demoparkapi.exception.EntityNotFoundException;
-import com.mballem.demoparkapi.exception.PasswordInvalidException;
-import com.mballem.demoparkapi.exception.UsernameUniqueViolationException;
+package com.mballem.demo_park_api.web.exception;
+import com.mballem.demo_park_api.exception.PasswordInvalidException;
+import com.mballem.demo_park_api.exception.UsernameUniqueViolationException;
+import com.mballem.demo_park_api.exception.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -27,7 +26,7 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorMessage> entityNotFoundException(RuntimeException ex, HttpServletRequest request) {
+    public ResponseEntity<ErrorMessage> entityNotFoundException(EntityNotFoundException ex, HttpServletRequest request) {
         log.error("Api Error - ", ex);
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
